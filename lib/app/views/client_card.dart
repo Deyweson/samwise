@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:samwise/app/bindings/client_detail_bindings.dart';
 import 'package:samwise/app/data/client_model.dart';
+import 'package:samwise/app/views/client_detail_view.dart';
 
 class ClientCard extends StatelessWidget {
   final ClientModel client;
@@ -23,6 +26,11 @@ class ClientCard extends StatelessWidget {
         isThreeLine: true,
         onTap: () {
           print('Client tapped: ${client.name}');
+          Get.to(
+            () => ClientDetailView(),
+            binding: ClientDetailBindings(),
+            arguments: client,
+          );
         },
       ),
     );

@@ -4,7 +4,7 @@ class ClientModel {
   final String email;
   final String phone;
   final String address;
-  final int points;
+  int points;
 
   ClientModel({
     this.id,

@@ -86,4 +86,22 @@ class DatabaseService {
     );
     return maps.map((map) => BuyModel.fromJson(map)).toList();
   }
+
+  Future<void> updateClient(ClientModel client) async {
+    final db = await database;
+    await db.update(
+      'clients',
+      client.toMap(),
+      where: 'id = ?',
+      whereArgs: [client.id],
+    );
+  }
+
+  Future<void> updateClientPoints(int clientId, int pointsToAdd) async {
+    final db = await database;
+    await db.rawUpdate('UPDATE clients SET points = points + ? WHERE id = ?', [
+      pointsToAdd,
+      clientId,
+    ]);
+  }
 }

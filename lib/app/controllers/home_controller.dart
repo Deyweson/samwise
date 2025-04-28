@@ -33,6 +33,13 @@ class HomeController extends GetxController {
     }
   }
 
+  void updateClientPoints(int clientId, int points) {
+    final client = clients.firstWhere((client) => client.id == clientId);
+    client.points = points;
+    clients.refresh(); // Notificar que houve uma mudança na lista
+    loadClients();
+  }
+
   void addClient() {
     Get.to(() => const AddClientView());
   }

@@ -1,13 +1,13 @@
 class BuyModel {
   final int? id;
   final int clientId;
-  final double valor;
+  final double value;
   final String description;
 
   BuyModel({
     this.id,
     required this.clientId,
-    required this.valor,
+    required this.value,
     required this.description,
   });
 
@@ -15,7 +15,7 @@ class BuyModel {
     return BuyModel(
       id: json['id'],
       clientId: json['client_id'],
-      valor: json['valor'],
+      value: json['value'],
       description: json['description'],
     );
   }
@@ -23,7 +23,7 @@ class BuyModel {
     return {
       'id': id,
       'client_id': clientId,
-      'valor': valor,
+      'value': value,
       'description': description,
     };
   }
