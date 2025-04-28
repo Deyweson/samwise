@@ -2,6 +2,7 @@ import 'package:samwise/app/data/buy_model.dart';
 import 'package:samwise/app/data/client_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
 
 class DatabaseService {
   DatabaseService._privateConstructor();
@@ -26,6 +27,7 @@ class DatabaseService {
 
     final directory = await getApplicationDocumentsDirectory();
     final path = '${directory.path}/app_database.db';
+    debugPrint('Database path: $path');
 
     return await databaseFactoryFfi.openDatabase(
       path,

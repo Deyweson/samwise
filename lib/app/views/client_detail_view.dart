@@ -124,6 +124,7 @@ class ClientDetailView extends GetView<ClientDetailController> {
                         child: ListTile(
                           title: Text(buy.description),
                           subtitle: Text('R\$ ${buy.value.toStringAsFixed(2)}'),
+                          trailing: Text('${(buy.value ~/ 100 * 10)} pts'),
                         ),
                       );
                     },
