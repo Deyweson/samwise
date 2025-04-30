@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:samwise/app/controllers/home_controller.dart';
-import 'package:samwise/app/data/client_model.dart';
-import 'package:samwise/app/data/database_service.dart';
+import 'package:samwise/app/controllers/add_client_page_controller.dart';
 import 'package:get/get.dart';
 
-class AddClientView extends StatefulWidget {
-  const AddClientView({super.key});
-
-  @override
-  State<AddClientView> createState() => _AddClientViewState();
-}
-
-class _AddClientViewState extends State<AddClientView> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController pointsController = TextEditingController(
-    text: '0',
-  );
-
+class AddClientView extends GetView<AddClientPageController> {
   @override
   Widget build(BuildContext context) {
+    final _c = controller;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Adicionar Cliente')),
       body: Padding(
@@ -42,12 +26,12 @@ class _AddClientViewState extends State<AddClientView> {
                   context.height * 0.6, // Altura fixa para o card (ajustável)
               padding: const EdgeInsets.all(16.0),
               child: Form(
-                key: _formKey,
+                key: _c.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      controller: nameController,
+                      controller: _c.nameController,
                       decoration: const InputDecoration(labelText: 'Nome'),
                       validator:
                           (value) =>
@@ -56,7 +40,7 @@ class _AddClientViewState extends State<AddClientView> {
                                   : null,
                     ),
                     TextFormField(
-                      controller: emailController,
+                      controller: _c.emailController,
                       decoration: const InputDecoration(labelText: 'E-mail'),
                       validator:
                           (value) =>
@@ -65,7 +49,7 @@ class _AddClientViewState extends State<AddClientView> {
                                   : null,
                     ),
                     TextFormField(
-                      controller: phoneController,
+                      controller: _c.phoneController,
                       decoration: const InputDecoration(labelText: 'Telefone'),
                       validator:
                           (value) =>
@@ -74,7 +58,7 @@ class _AddClientViewState extends State<AddClientView> {
                                   : null,
                     ),
                     TextFormField(
-                      controller: addressController,
+                      controller: _c.addressController,
                       decoration: const InputDecoration(labelText: 'Endereço'),
                       validator:
                           (value) =>
@@ -83,7 +67,7 @@ class _AddClientViewState extends State<AddClientView> {
                                   : null,
                     ),
                     TextFormField(
-                      controller: pointsController,
+                      controller: _c.pointsController,
                       decoration: const InputDecoration(labelText: 'Pontos'),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -98,7 +82,7 @@ class _AddClientViewState extends State<AddClientView> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: _addClient,
+                      onPressed: _c.addClient,
                       child: const Text('Salvar'),
                     ),
                   ],
@@ -109,30 +93,5 @@ class _AddClientViewState extends State<AddClientView> {
         ),
       ),
     );
-  }
-
-  void _addClient() async {
-    if (_formKey.currentState!.validate()) {
-      final name = nameController.text;
-      final email = emailController.text;
-      final phone = phoneController.text;
-      final points =
-          pointsController.text.isNotEmpty
-              ? int.parse(pointsController.text)
-              : 0;
-
-      final ClientModel client = ClientModel(
-        name: name,
-        email: email,
-        phone: phone,
-        address: addressController.text, // Adicionando o endereço
-        points: points,
-      );
-      final databaseService = DatabaseService();
-      await databaseService.insertClient(client);
-
-      Get.find<HomeController>().loadClients();
-      Get.back();
-    }
   }
 }

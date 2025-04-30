@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:samwise/app/controllers/client_page_controller.dart';
+import 'package:samwise/app/routes/app_routes.dart';
 
 class ClientDetailView extends GetView<ClientDetailController> {
   const ClientDetailView({Key? key}) : super(key: key);
@@ -13,6 +14,11 @@ class ClientDetailView extends GetView<ClientDetailController> {
       appBar: AppBar(
         title: const Text('Detalhes do Cliente'),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.back(result: true),
+          tooltip: 'Voltar',
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -106,7 +112,8 @@ class ClientDetailView extends GetView<ClientDetailController> {
               if (controller.buys.isEmpty) {
                 return const Center(child: Text('Nenhuma compra encontrada.'));
               }
-              return Center(
+              return Align(
+                alignment: Alignment.topCenter,
                 child: Container(
                   width:
                       600, // Defina a largura do Container para controlar o espaço ocupado pela lista

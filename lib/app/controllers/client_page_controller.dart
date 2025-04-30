@@ -5,6 +5,7 @@ import 'package:samwise/app/controllers/home_controller.dart';
 import 'package:samwise/app/data/buy_model.dart';
 import 'package:samwise/app/data/client_model.dart';
 import 'package:samwise/app/data/database_service.dart';
+import 'package:samwise/app/routes/app_routes.dart';
 
 class ClientDetailController extends GetxController {
   final ClientModel client;
@@ -27,6 +28,11 @@ class ClientDetailController extends GetxController {
       client.id!,
     );
     buys.assignAll(loadedBuys);
+  }
+
+  Future<void> updateClientPoints(int clientId, int points) async {
+    await DatabaseService.instance.updateClientPoints(clientId, points);
+    // client.points = points;
   }
 
   void showAddBuyModal() {
@@ -119,13 +125,8 @@ class ClientDetailController extends GetxController {
                 );
 
                 await DatabaseService.instance.addBuy(buy);
-                await DatabaseService.instance.updateClientPoints(
-                  client.id!,
-                  points.value,
-                );
+                await updateClientPoints(client.id!, points.value);
                 await loadBuy();
-                final clientController = Get.find<HomeController>();
-                clientController.updateClientPoints(client.id!, points.value);
 
                 Get.back();
               }
@@ -162,8 +163,7 @@ class ClientDetailController extends GetxController {
               client.points = newPoints;
               await DatabaseService.instance.updateClient(client);
 
-              final clientController = Get.find<HomeController>();
-              clientController.updateClientPoints(client.id!, newPoints);
+              await updateClientPoints(client.id!, newPoints);
 
               Get.back();
             },
