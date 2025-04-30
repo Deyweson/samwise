@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:samwise/app/data/client_model.dart';
 import 'package:samwise/app/data/database_service.dart';
-import 'package:samwise/app/views/add_client_view.dart';
 
 class HomeController extends GetxController {
   final searchController = TextEditingController();
@@ -31,16 +30,5 @@ class HomeController extends GetxController {
         ),
       );
     }
-  }
-
-  void updateClientPoints(int clientId, int points) {
-    final client = clients.firstWhere((client) => client.id == clientId);
-    client.points = points;
-    clients.refresh(); // Notificar que houve uma mudança na lista
-    loadClients();
-  }
-
-  void addClient() {
-    Get.to(() => const AddClientView());
   }
 }

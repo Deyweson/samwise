@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:samwise/app/controllers/home_controller.dart';
 import 'package:samwise/app/data/database_service.dart';
+import 'package:samwise/app/routes/app_pages.dart';
+import 'package:samwise/app/routes/app_routes.dart';
 import 'package:samwise/app/views/home_view.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:get/get.dart';
@@ -27,7 +29,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const HomeView(),
+      initialRoute: AppRoutes.HOME,
+      getPages: AppPages.routes,
     );
   }
 }
